@@ -15,9 +15,12 @@ struct UserItemView: View {
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.gray.opacity(0.05))
-                Image("avatar")
+                    .fill(Color.gray.opacity(0.1))
+                Image("image")
                     .resizable()
+                    .renderingMode(.template)
+                    .foregroundStyle(.gray.opacity(0.3))
+                    .padding(8)
                     .frame(width: imageSize, height: imageSize)
                     .background(Color(red: 234/255, green: 227/255, blue: 244/255))
                     .clipShape(Circle())
