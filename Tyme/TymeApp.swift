@@ -25,7 +25,7 @@ struct TymeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HostingScreen()
         }
         .modelContainer(sharedModelContainer)
     }

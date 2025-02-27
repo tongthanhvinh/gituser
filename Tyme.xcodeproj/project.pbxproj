@@ -29,9 +29,34 @@
 		FD4841FD2D7096E70037AA76 /* TymeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TymeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FD4842142D7098DE0037AA76 /* Exceptions for "Tyme" folder in "TymeUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/Ext+View.swift",
+				Screens/HostingScreen.swift,
+				Screens/UserDetailsScreen.swift,
+				Screens/UserListScreen.swift,
+				Views/UserItemView.swift,
+			);
+			target = FD4841FC2D7096E70037AA76 /* TymeUITests */;
+		};
+		FD48421F2D709A940037AA76 /* Exceptions for "Tyme" folder in "TymeTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/User.swift,
+			);
+			target = FD4841F22D7096E70037AA76 /* TymeTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FD4841E32D7096E60037AA76 /* Tyme */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FD48421F2D709A940037AA76 /* Exceptions for "Tyme" folder in "TymeTests" target */,
+				FD4842142D7098DE0037AA76 /* Exceptions for "Tyme" folder in "TymeUITests" target */,
+			);
 			path = Tyme;
 			sourceTree = "<group>";
 		};
@@ -403,6 +428,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -431,6 +457,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
