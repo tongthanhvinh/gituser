@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UserItemView: View {
     
+    var user: User
+    
     private let imageSize: CGFloat = 80
     
     var body: some View {
@@ -16,22 +18,22 @@ struct UserItemView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
-                Image("image")
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundStyle(.gray.opacity(0.3))
-                    .padding(8)
-                    .frame(width: imageSize, height: imageSize)
-                    .background(Color(red: 234/255, green: 227/255, blue: 244/255))
-                    .clipShape(Circle())
-                    .padding(8)
+                CachedAsyncImageView(
+                    url: URL(string: user.avatar_url)!,
+                    placeholder: Image("image")
+                )
+                .foregroundStyle(.gray.opacity(0.3))
+                .frame(width: imageSize, height: imageSize)
+                .background(Color(red: 234/255, green: 227/255, blue: 244/255))
+                .clipShape(Circle())
+                .padding(8)
             }
             .fixedSize()
             VStack(alignment: .leading, spacing: 8) {
-                Text("Vinh Tong")
+                Text(user.login)
                     .font(.headline)
                 Divider()
-                Text("https://google.com")
+                Text(user.html_url)
                     .font(.subheadline)
                     .underline()
                 Spacer()
@@ -46,6 +48,6 @@ struct UserItemView: View {
 }
 
 #Preview {
-    UserItemView()
+    UserItemView(user: User(id: 5, login: "", avatar_url: "", html_url: ""))
         .padding(16)
 }

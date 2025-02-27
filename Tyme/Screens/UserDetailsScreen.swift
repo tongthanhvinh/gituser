@@ -9,11 +9,13 @@ import SwiftUI
 
 struct UserDetailsScreen: View {
     
+    var user: User
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(alignment: .leading) {
-            UserItemView()
+            UserItemView(user: user)
             
             HStack(spacing: 0) {
                 Spacer()
@@ -64,6 +66,6 @@ struct UserDetailsScreen: View {
 
 #Preview {
     NavigationStack {
-        UserDetailsScreen()
+        UserDetailsScreen(user: User(id: 1, login: "", avatar_url: "", html_url: ""))
     }
 }

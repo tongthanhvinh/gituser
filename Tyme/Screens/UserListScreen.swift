@@ -9,16 +9,17 @@ import SwiftUI
 
 struct UserListScreen: View {
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel = UserListViewModel()
     
     var body: some View {
-        List(0...12, id: \.self) { index in
+        List(viewModel.users, id: \.self.id) { user in
             ZStack {
                 NavigationLink("") {
-                    UserDetailsScreen()
+                    UserDetailsScreen(user: user)
                 }
                 .opacity(0)
-                UserItemView()
+                UserItemView(user: user)
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
