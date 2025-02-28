@@ -32,17 +32,10 @@ struct UserItemView: View {
                     .font(.headline)
                     .lineLimit(1)
                 Divider()
-                if let url = URL(string: user.html_url) {
-                    Button(action: {
-                        UIApplication.shared.open(url)
-                    }) {
-                        Text(user.html_url)
-                            .font(.subheadline)
-                            .underline()
-                            .foregroundColor(.blue)
-                    }
-                    .buttonStyle(.plain)
-                }
+                Text(user.html_url)
+                    .font(.caption)
+                    .underline()
+                    .foregroundColor(.blue)
                 Spacer()
             }
         }
