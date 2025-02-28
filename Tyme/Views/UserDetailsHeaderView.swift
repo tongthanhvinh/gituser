@@ -52,10 +52,10 @@ struct UserDetailsHeaderView: View {
 #Preview {
     UserDetailsHeaderView(
         user: UserDetails(
-            id: 5,
-            login: "Name",
-            avatar_url: "",
-            html_url: "",
+            id: 10725542,
+            login: "tongthanhvinh",
+            avatar_url: "https://avatars.githubusercontent.com/u/10725542?v=4",
+            html_url: "https://github.com/tongthanhvinh",
             location: "Viet Nam",
             followers: 1000,
             following: 100

@@ -57,10 +57,10 @@ struct UserItemView: View {
 #Preview {
     UserItemView(
         user: User(
-            id: 5,
-            login: "User Test",
-            avatar_url: "https://i.pravatar.cc/150?img=2",
-            html_url: "https://i.pravatar.cc/150?img=2"
+            id: 10725542,
+            login: "tongthanhvinh",
+            avatar_url: "https://avatars.githubusercontent.com/u/10725542?v=4",
+            html_url: "https://github.com/tongthanhvinh"
         )
     )
     .padding(16)

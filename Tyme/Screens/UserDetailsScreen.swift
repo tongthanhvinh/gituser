@@ -79,6 +79,6 @@ struct UserDetailsScreen: View {
 
 #Preview {
     NavigationStack {
-        UserDetailsScreen(login: "mcooke")
+        UserDetailsScreen(login: "tongthanhvinh")
     }
 }
