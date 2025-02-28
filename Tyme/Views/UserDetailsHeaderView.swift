@@ -1,5 +1,5 @@
 //
-//  UserItemView.swift
+//  UserDetailsHeaderView.swift
 //  Tyme
 //
 //  Created by Vinh Tong on 27/2/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct UserItemView: View {
+struct UserDetailsHeaderView: View {
     
-    var user: User
+    var user: UserDetails?
     
     private let imageSize: CGFloat = 80
     
@@ -18,7 +18,7 @@ struct UserItemView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
-                CachedAsyncImageView(urlStr: user.avatar_url)
+                CachedAsyncImageView(urlStr: user?.avatar_url)
                     .foregroundStyle(.gray.opacity(0.3))
                     .frame(width: imageSize, height: imageSize)
                     .background(Color(red: 234/255, green: 227/255, blue: 244/255))
@@ -26,22 +26,17 @@ struct UserItemView: View {
                     .padding(8)
             }
             .fixedSize()
-            
             VStack(alignment: .leading, spacing: 8) {
-                Text(user.login)
+                Text(user?.login ?? "")
                     .font(.headline)
                     .lineLimit(1)
                 Divider()
-                if let url = URL(string: user.html_url) {
-                    Button(action: {
-                        UIApplication.shared.open(url)
-                    }) {
-                        Text(user.html_url)
-                            .font(.subheadline)
-                            .underline()
-                            .foregroundColor(.blue)
-                    }
-                    .buttonStyle(.plain)
+                HStack(spacing: 2) {
+                    Image("location")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                    Text(user?.location ?? "")
+                        .font(.caption)
                 }
                 Spacer()
             }
@@ -55,12 +50,15 @@ struct UserItemView: View {
 }
 
 #Preview {
-    UserItemView(
-        user: User(
+    UserDetailsHeaderView(
+        user: UserDetails(
             id: 5,
-            login: "User Test",
-            avatar_url: "https://i.pravatar.cc/150?img=2",
-            html_url: "https://i.pravatar.cc/150?img=2"
+            login: "Name",
+            avatar_url: "",
+            html_url: "",
+            location: "Viet Nam",
+            followers: 1000,
+            following: 100
         )
     )
     .padding(16)

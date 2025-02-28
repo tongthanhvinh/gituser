@@ -23,7 +23,7 @@ final class UserListViewModel: ObservableObject {
     }
     
     private func fetchUsers() async throws -> [User] {
-        try await Task.sleep(nanoseconds: 1_000_000_000)
+//        try await Task.sleep(nanoseconds: 1_000_000_000)
         let urlString = String(format: urlTemplate, perPage, since)
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)

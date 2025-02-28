@@ -19,7 +19,7 @@ struct UserListScreen: View {
             ForEach(viewModel.users) { user in
                 ZStack {
                     NavigationLink("") {
-                        UserDetailsScreen(user: user)
+                        UserDetailsScreen(login: user.login)
                     }
                     .opacity(0)
                     UserItemView(user: user)
@@ -40,7 +40,6 @@ struct UserListScreen: View {
                 HStack {
                     Spacer()
                     ProgressView()
-                        .tint(.red)
                     Spacer()
                 }
                 .listRowSeparator(.hidden)

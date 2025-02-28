@@ -38,6 +38,7 @@
 				Screens/UserDetailsScreen.swift,
 				Screens/UserListScreen.swift,
 				Views/CachedAsyncImageView.swift,
+				Views/UserDetailsHeaderView.swift,
 				Views/UserItemView.swift,
 			);
 			target = FD4841FC2D7096E70037AA76 /* TymeUITests */;
@@ -46,7 +47,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/User.swift,
+				Models/UserDetails.swift,
+				Models/UserError.swift,
 				"View Models/UserListViewModel.swift",
+				"View Models/UserViewModel.swift",
 				Views/CachedAsyncImageView.swift,
 			);
 			target = FD4841F22D7096E70037AA76 /* TymeTests */;

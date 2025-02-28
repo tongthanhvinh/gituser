@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CachedAsyncImageView: View {
-    let url: URL
-    let placeholder: Image
+    
+    let urlStr: String?
 
     @State private var image: UIImage? = nil
 
@@ -19,15 +19,21 @@ struct CachedAsyncImageView: View {
                 Image(uiImage: image)
                     .resizable()
             } else {
-                placeholder
+                Image("image")
                     .resizable()
+                    .renderingMode(.template)
+                    .foregroundStyle(Color.gray.opacity(0.5))
+                    .padding()
                     .onAppear(perform: loadImage)
             }
         }
     }
 
     private func loadImage() {
-        if let cachedImage = ImageCache.shared.get(forKey: url.absoluteString) {
+        guard let urlStr = urlStr else {
+            return
+        }
+        if let cachedImage = ImageCache.shared.get(forKey: urlStr) {
             self.image = cachedImage
         } else {
             downloadImage()
@@ -35,6 +41,9 @@ struct CachedAsyncImageView: View {
     }
 
     private func downloadImage() {
+        guard let urlStr = urlStr, let url = URL(string: urlStr) else {
+            return
+        }
         URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data, let uiImage = UIImage(data: data) {
                 ImageCache.shared.set(uiImage, forKey: url.absoluteString)
@@ -60,3 +69,11 @@ class ImageCache {
     }
 }
 
+#Preview {
+    CachedAsyncImageView(urlStr: nil)
+        .frame(width: 100, height: 100)
+        .foregroundStyle(.gray.opacity(0.3))
+        .background(Color(red: 234/255, green: 227/255, blue: 244/255))
+        .clipShape(Circle())
+        .padding(8)
+}
