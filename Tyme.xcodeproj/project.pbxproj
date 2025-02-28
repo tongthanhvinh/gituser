@@ -46,6 +46,7 @@
 		FD48421F2D709A940037AA76 /* Exceptions for "Tyme" folder in "TymeTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Models/ImageCache.swift,
 				Models/User.swift,
 				Models/UserDetails.swift,
 				Models/UserError.swift,
