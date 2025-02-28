@@ -30,7 +30,7 @@ struct UserItemView: View {
             }
             .fixedSize()
             VStack(alignment: .leading, spacing: 8) {
-                Text(user.login)
+                Text(user.login + " - \(user.id)")
                     .font(.headline)
                 Divider()
                 Text(user.html_url)

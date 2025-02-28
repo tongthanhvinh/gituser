@@ -14,43 +14,49 @@ final class UserListViewModel: ObservableObject {
     
     private var since = 0
     private let perPage = 20
+    private var canLoadMore = true
+//    private let urlTemplate = "https://api.github.com/users?per_page=%d&since=%d"
+    private let urlTemplate = "http://127.0.0.1:5000/users?per_page=%d&since=%d"
     
     init() {
-        fetchUsers()
+        loadData()
     }
     
-    private func fetchUsers() {
-        guard !isLoading else { return }
+    private func fetchUsers() async throws -> [User] {
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        let urlString = String(format: urlTemplate, perPage, since)
+        guard let url = URL(string: urlString) else {
+            throw URLError(.badURL)
+        }
+
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let newUsersDTO = try JSONDecoder().decode([UserDTO].self, from: data)
+        return newUsersDTO.map { $0.toUser() }
+    }
+    
+    func loadData() {
+        guard !isLoading && canLoadMore else { return }
         isLoading = true
-
-        let urlString = "https://api.github.com/users?per_page=\(perPage)&since=\(since)"
-        guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
-            
-            if let error = error {
-                print("Error fetching users: \(error.localizedDescription)")
-                return
-            }
-
-            guard let data = data else { return }
-
+        
+        Task {
             do {
-                let newUsersDTO = try JSONDecoder().decode([UserDTO].self, from: data)
-                let newUsers = newUsersDTO.map { $0.toUser() }
-                DispatchQueue.main.async {
-//                    self.saveUsersToDatabase(users: newUsers)
-                    self.users = newUsers
-                    self.since = newUsers.last?.id ?? self.since
+                let newUsers = try await fetchUsers()
+                await MainActor.run {
+                    self.users.append(contentsOf: newUsers)
+                    self.isLoading = false
+                    if newUsers.isEmpty {
+                        self.canLoadMore = false
+                    } else {
+                        self.since = newUsers.last?.id ?? self.since
+                    }
                 }
             } catch {
-                print("Decoding error: \(error.localizedDescription)")
+                print("Error fetching items: \(error)")
+                await MainActor.run {
+                    self.isLoading = false
+                }
             }
         }
-        .resume()
     }
     
 }
