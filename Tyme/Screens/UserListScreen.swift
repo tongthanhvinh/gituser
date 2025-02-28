@@ -42,6 +42,7 @@ struct UserListScreen: View {
                     ProgressView()
                     Spacer()
                 }
+                .id(UUID())
                 .listRowSeparator(.hidden)
             }
         }
