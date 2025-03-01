@@ -10,11 +10,9 @@ import SwiftUI
 struct UserDetailsScreen: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel: UserViewModel
+    @StateObject private var viewModel = UserViewModel()
     
-    init(login: String) {
-        _viewModel = StateObject(wrappedValue: UserViewModel(login: login))
-    }
+    let login: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -55,8 +53,8 @@ struct UserDetailsScreen: View {
                 
                 Text("Blog")
                     .font(.headline)
-                if let url = URL(string: userDetails.html_url) {
-                    Link(userDetails.html_url, destination: url)
+                if let url = URL(string: userDetails.htmlUrl) {
+                    Link(userDetails.htmlUrl, destination: url)
                         .font(.subheadline)
                         .underline()
                         .foregroundStyle(.blue)
@@ -74,6 +72,9 @@ struct UserDetailsScreen: View {
         .padding(16)
         .navigationTitle("User Details")
         .configBackButton(dismiss: dismiss)
+        .task {
+            viewModel.loadUserDetails(username: login)
+        }
     }
 }
 

@@ -18,7 +18,7 @@ struct UserItemView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
-                CachedAsyncImageView(urlStr: user.avatar_url)
+                CachedAsyncImageView(urlStr: user.avatarUrl)
                     .foregroundStyle(.gray.opacity(0.3))
                     .frame(width: imageSize, height: imageSize)
                     .background(Color(red: 234/255, green: 227/255, blue: 244/255))
@@ -32,10 +32,13 @@ struct UserItemView: View {
                     .font(.headline)
                     .lineLimit(1)
                 Divider()
-                Text(user.html_url)
+                Text(user.htmlUrl)
                     .font(.caption)
                     .underline()
                     .foregroundColor(.blue)
+                Text(String(user.id))
+                    .font(.caption)
+                    .foregroundColor(.red)
                 Spacer()
             }
         }
@@ -52,8 +55,8 @@ struct UserItemView: View {
         user: User(
             id: 10725542,
             login: "tongthanhvinh",
-            avatar_url: "https://avatars.githubusercontent.com/u/10725542?v=4",
-            html_url: "https://github.com/tongthanhvinh"
+            avatarUrl: "https://avatars.githubusercontent.com/u/10725542?v=4",
+            htmlUrl: "https://github.com/tongthanhvinh"
         )
     )
     .padding(16)

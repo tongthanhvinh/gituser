@@ -18,7 +18,7 @@ struct UserDetailsHeaderView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
-                CachedAsyncImageView(urlStr: user?.avatar_url)
+                CachedAsyncImageView(urlStr: user?.avatarUrl)
                     .foregroundStyle(.gray.opacity(0.3))
                     .frame(width: imageSize, height: imageSize)
                     .background(Color(red: 234/255, green: 227/255, blue: 244/255))
@@ -54,8 +54,8 @@ struct UserDetailsHeaderView: View {
         user: UserDetails(
             id: 10725542,
             login: "tongthanhvinh",
-            avatar_url: "https://avatars.githubusercontent.com/u/10725542?v=4",
-            html_url: "https://github.com/tongthanhvinh",
+            avatarUrl: "https://avatars.githubusercontent.com/u/10725542?v=4",
+            htmlUrl: "https://github.com/tongthanhvinh",
             location: "Viet Nam",
             followers: 1000,
             following: 100

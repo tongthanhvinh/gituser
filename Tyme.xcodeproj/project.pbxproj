@@ -50,8 +50,12 @@
 				Models/User.swift,
 				Models/UserDetails.swift,
 				Models/UserError.swift,
-				"View Models/UserListViewModel.swift",
-				"View Models/UserViewModel.swift",
+				Repositories/UserRepository.swift,
+				Repositories/UserRepositoryProtocol.swift,
+				Services/UserAPIService.swift,
+				Storage/UserStorage.swift,
+				ViewModels/UserListViewModel.swift,
+				ViewModels/UserViewModel.swift,
 				Views/CachedAsyncImageView.swift,
 			);
 			target = FD4841F22D7096E70037AA76 /* TymeTests */;

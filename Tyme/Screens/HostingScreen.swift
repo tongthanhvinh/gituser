@@ -13,14 +13,8 @@ struct HostingScreen: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            NavigationLink("Tyme Home Test") {
-                UserListScreen()
-            }
-            .navigationDestination(for: Int.self) { value in
-                if value == 1 {
-                    UserListScreen()
-                }
-            }
+            NavigationLink("Tyme Home Test", value: 1)
+                .navigationDestination(for: Int.self) { _ in UserListScreen() }
         }
     }
 }

@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct UserListScreen: View {
     
     @Environment(\.dismiss) private var dismiss
-    @StateObject var viewModel = UserListViewModel()
     
-    private let loadThreshold = 3 // Trigger load when 3 items from the end
+    @StateObject private var viewModel = UserListViewModel()
     
     var body: some View {
         List {
@@ -28,22 +28,17 @@ struct UserListScreen: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                 .onAppear {
-                    // Check if this item is within the threshold of the last item
-                    if let index = viewModel.users.firstIndex(of: user),
-                       index >= viewModel.users.count - loadThreshold {
-                        viewModel.loadData()
+                    if viewModel.shouldLoadMoreData(currentItem: user) {
+                        viewModel.loadMoreUsers()
                     }
                 }
             }
             
             if viewModel.isLoading {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                }
-                .id(UUID())
-                .listRowSeparator(.hidden)
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .id(UUID())
+                    .listRowSeparator(.hidden)
             }
         }
         .background(Color.white)
