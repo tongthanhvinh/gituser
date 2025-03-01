@@ -23,4 +23,11 @@ struct UserError: Error {
         
         static let notFound: Code = Code(rawValue: 1)
     }
+    
+    var description: String {
+        switch code {
+        case .notFound: return "User Not found"
+        default: return "Unknown error"
+        }
+    }
 }

@@ -51,15 +51,11 @@ final class UserStorage {
     
     @MainActor
     func deleteAllUsers() async throws {
-        do {
-            let fetchDescriptor = FetchDescriptor<User>()
-            let allItems = try container.mainContext.fetch(fetchDescriptor)
-            for item in allItems {
-                container.mainContext.delete(item)
-            }
-            try container.mainContext.save()
-        } catch {
-            print("Failed to delete all items: \(error)")
+        let fetchDescriptor = FetchDescriptor<User>()
+        let allItems = try container.mainContext.fetch(fetchDescriptor)
+        for item in allItems {
+            container.mainContext.delete(item)
         }
+        try container.mainContext.save()
     }
 }

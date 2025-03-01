@@ -33,6 +33,7 @@
 		FD4842142D7098DE0037AA76 /* Exceptions for "Tyme" folder in "TymeUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Extensions/Ext+UINavigationController.swift",
 				"Extensions/Ext+View.swift",
 				Screens/HostingScreen.swift,
 				Screens/UserDetailsScreen.swift,

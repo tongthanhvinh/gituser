@@ -15,9 +15,9 @@ struct UserDetailsScreen: View {
     let login: String
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             if let userDetails = viewModel.userDetails {
-                UserDetailsHeaderView(user: viewModel.userDetails)
+                UserDetailsHeaderView(user: userDetails)
                 
                 HStack(spacing: 0) {
                     Spacer()
@@ -26,7 +26,7 @@ struct UserDetailsScreen: View {
                             .padding(12)
                             .background(.gray.opacity(0.1))
                             .clipShape(Circle())
-                        Text("\(userDetails.followers)")
+                        Text(followersStr(userDetails.followers))
                             .font(.caption)
                             .foregroundColor(.black)
                         Text("Follower")
@@ -39,7 +39,7 @@ struct UserDetailsScreen: View {
                             .padding(12)
                             .background(.gray.opacity(0.1))
                             .clipShape(Circle())
-                        Text("\(userDetails.following)")
+                        Text(followingStr(userDetails.following))
                             .font(.caption)
                             .foregroundColor(.black)
                         Text("Following")
@@ -53,13 +53,20 @@ struct UserDetailsScreen: View {
                 
                 Text("Blog")
                     .font(.headline)
-                if let url = URL(string: userDetails.htmlUrl) {
-                    Link(userDetails.htmlUrl, destination: url)
-                        .font(.subheadline)
-                        .underline()
-                        .foregroundStyle(.blue)
+                if let htmlUrl = userDetails.htmlUrl, let url = URL(string: htmlUrl) {
+                    Button(action: {
+                        UIApplication.shared.open(url)
+                    }) {
+                        Text(htmlUrl)
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                    }
+                    .buttonStyle(.plain)
                 }
                 Spacer()
+            } else if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .font(.caption)
             }
             
             if viewModel.isLoading {
@@ -75,6 +82,26 @@ struct UserDetailsScreen: View {
         .task {
             viewModel.loadUserDetails(username: login)
         }
+    }
+    
+    private func followersStr(_ count: Int?) -> String {
+        guard let count = count else {
+            return "0"
+        }
+        if count > 100 {
+            return String(format: "100+", count)
+        }
+        return String(format: "%d", count)
+    }
+    
+    private func followingStr(_ count: Int?) -> String {
+        guard let count = count else {
+            return "0"
+        }
+        if count > 10 {
+            return String(format: "10+", count)
+        }
+        return String(format: "%d", count)
     }
 }
 

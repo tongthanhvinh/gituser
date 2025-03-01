@@ -14,11 +14,11 @@ final class User: Identifiable, Codable {
     
     @Attribute(.unique) var id: Int
     var login: String
-    var avatarUrl: String
-    var htmlUrl: String
+    var avatarUrl: String?
+    var htmlUrl: String?
     var timestamp = Date().timeIntervalSince1970
     
-    init(id: Int, login: String, avatarUrl: String, htmlUrl: String) {
+    init(id: Int, login: String, avatarUrl: String?, htmlUrl: String?) {
         self.id = id
         self.login = login
         self.avatarUrl = avatarUrl
@@ -36,8 +36,8 @@ final class User: Identifiable, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.login = try container.decode(String.self, forKey: .login)
-        self.avatarUrl = try container.decode(String.self, forKey: .avatarUrl)
-        self.htmlUrl = try container.decode(String.self, forKey: .htmlUrl)
+        self.avatarUrl = try container.decodeIfPresent(String.self, forKey: .avatarUrl)
+        self.htmlUrl = try container.decodeIfPresent(String.self, forKey: .htmlUrl)
     }
     
     func encode(to encoder: Encoder) throws {

@@ -13,18 +13,18 @@ final class UserDetails: Identifiable, Codable {
     
     @Attribute(.unique) var id: Int
     var login: String
-    var avatarUrl: String
-    var htmlUrl: String
-    var location: String
+    var avatarUrl: String?
+    var htmlUrl: String?
+    var location: String?
     var followers: Int
     var following: Int
 
     init(
         id: Int,
         login: String,
-        avatarUrl: String,
-        htmlUrl: String,
-        location: String,
+        avatarUrl: String?,
+        htmlUrl: String?,
+        location: String?,
         followers: Int,
         following: Int
     ) {
@@ -51,9 +51,9 @@ final class UserDetails: Identifiable, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.login = try container.decode(String.self, forKey: .login)
-        self.avatarUrl = try container.decode(String.self, forKey: .avatarUrl)
-        self.htmlUrl = try container.decode(String.self, forKey: .htmlUrl)
-        self.location = try container.decode(String.self, forKey: .location)
+        self.avatarUrl = try container.decodeIfPresent(String.self, forKey: .avatarUrl)
+        self.htmlUrl = try container.decodeIfPresent(String.self, forKey: .htmlUrl)
+        self.location = try container.decodeIfPresent(String.self, forKey: .location)
         self.followers = try container.decode(Int.self, forKey: .followers)
         self.following = try container.decode(Int.self, forKey: .following)
     }

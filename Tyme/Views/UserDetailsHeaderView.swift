@@ -35,7 +35,7 @@ struct UserDetailsHeaderView: View {
                     Image("location")
                         .resizable()
                         .frame(width: 16, height: 16)
-                    Text(user?.location ?? "")
+                    Text(user?.location ?? "nil")
                         .font(.caption)
                 }
                 Spacer()

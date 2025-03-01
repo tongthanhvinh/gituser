@@ -11,6 +11,7 @@ final class UserViewModel: ObservableObject {
     
     @Published var userDetails: UserDetails?
     @Published var isLoading = false
+    @Published var errorMessage: String?
     
     private let repository: UserRepositoryProtocol
     
@@ -18,18 +19,21 @@ final class UserViewModel: ObservableObject {
         self.repository = repository
     }
     
-    deinit {
-        print("deinit UserViewModel")
-    }
-    
     func loadUserDetails(username: String) {
         guard !isLoading else { return }
         isLoading = true
         Task {
-            let userDetails = try? await repository.getUserDetails(username: username)
-            await MainActor.run {
-                self.isLoading = false
-                self.userDetails = userDetails
+            do {
+                let userDetails = try await repository.getUserDetails(username: username)
+                await MainActor.run {
+                    self.isLoading = false
+                    self.userDetails = userDetails
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    self.errorMessage = UserError(.notFound).description
+                }
             }
         }
     }
