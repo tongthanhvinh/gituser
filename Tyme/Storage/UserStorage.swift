@@ -28,7 +28,7 @@ final class UserStorage {
     }
     
     @MainActor
-    func saveUsers(_ users: [User]) throws {
+    func saveUsers(_ users: [User]) async throws {
         users.forEach { container.mainContext.insert($0) }
         try container.mainContext.save()
     }
@@ -47,5 +47,19 @@ final class UserStorage {
             return cachedUsers
         }
         return []
+    }
+    
+    @MainActor
+    func deleteAllUsers() async throws {
+        do {
+            let fetchDescriptor = FetchDescriptor<User>()
+            let allItems = try container.mainContext.fetch(fetchDescriptor)
+            for item in allItems {
+                container.mainContext.delete(item)
+            }
+            try container.mainContext.save()
+        } catch {
+            print("Failed to delete all items: \(error)")
+        }
     }
 }

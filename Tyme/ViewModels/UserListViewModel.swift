@@ -53,4 +53,20 @@ final class UserListViewModel: ObservableObject {
         guard let index = users.firstIndex(of: currentItem) else { return false }
         return index >= users.count - loadThreshold && canLoadMore && !isLoading
     }
+    
+    func refreshData() {
+        Task {
+            do {
+                try await repository.deleteAllUsers()
+                await MainActor.run {
+                    since = 0
+                    canLoadMore = true
+                    users = []
+                    loadMoreUsers()
+                }
+            } catch {
+                print("Error refresh users: \(error)")
+            }
+        }
+    }
 }

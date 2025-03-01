@@ -30,4 +30,8 @@ final class UserRepository: UserRepositoryProtocol {
     func getUserDetails(username: String) async throws -> UserDetails {
         return try await apiService.fetchUserDetail(username: username)
     }
+    
+    func deleteAllUsers() async throws {
+        try await storage.deleteAllUsers()
+    }
 }

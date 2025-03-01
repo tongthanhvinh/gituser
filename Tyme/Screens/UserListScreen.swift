@@ -46,6 +46,9 @@ struct UserListScreen: View {
         .listStyle(.plain)
         .navigationTitle("Github Users")
         .configBackButton(dismiss: dismiss)
+        .refreshable {
+            viewModel.refreshData()
+        }
     }
 }
 

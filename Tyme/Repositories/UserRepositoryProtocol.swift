@@ -11,4 +11,5 @@ import Foundation
 protocol UserRepositoryProtocol {
     func getUsers(perPage: Int, since: Int) async throws -> [User]
     func getUserDetails(username: String) async throws -> UserDetails
+    func deleteAllUsers() async throws
 }
