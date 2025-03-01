@@ -13,8 +13,18 @@ struct HostingScreen: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            NavigationLink("Tyme Home Test", value: 1)
-                .navigationDestination(for: Int.self) { _ in UserListScreen() }
+            NavigationLink(value: 1) {
+                VStack {
+                    Image("app_icon")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .cornerRadius(22)
+                    Text("OctopusHub")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.black)
+                }
+            }
+            .navigationDestination(for: Int.self) { _ in UserListScreen() }
         }
     }
 }

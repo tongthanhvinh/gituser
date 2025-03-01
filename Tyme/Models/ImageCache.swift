@@ -37,7 +37,7 @@ class ImageCache {
                 return uiImage
             }
         } catch {
-            print("Failed to load image: \(error)")
+//            print("Failed to load image: \(error)")
         }
         return nil
     }
