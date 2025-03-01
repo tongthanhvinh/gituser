@@ -47,6 +47,7 @@
 		FD48421F2D709A940037AA76 /* Exceptions for "Tyme" folder in "TymeTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config/Config.swift,
 				Models/ImageCache.swift,
 				Models/User.swift,
 				Models/UserDetails.swift,
@@ -117,6 +118,8 @@
 				FD4841F62D7096E70037AA76 /* TymeTests */,
 				FD4842002D7096E70037AA76 /* TymeUITests */,
 				FD4841E22D7096E60037AA76 /* Products */,
+				FD4845612D733B390037AA76 /* Configs */,
+				FD4845622D733B450037AA76 /* Configs */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +131,20 @@
 				FD4841FD2D7096E70037AA76 /* TymeUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FD4845612D733B390037AA76 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
+		FD4845622D733B450037AA76 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +326,8 @@
 /* Begin XCBuildConfiguration section */
 		FD4842052D7096E70037AA76 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FD4841E32D7096E60037AA76 /* Tyme */;
+			baseConfigurationReferenceRelativePath = Configs/Debug.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -372,6 +391,8 @@
 		};
 		FD4842062D7096E70037AA76 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FD4841E32D7096E60037AA76 /* Tyme */;
+			baseConfigurationReferenceRelativePath = Configs/Release.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

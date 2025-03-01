@@ -12,13 +12,12 @@ final class UserAPIService {
     
     static let shared = UserAPIService()
     
-    private let baseUrlString = "http://127.0.0.1:5000/users"
-//    private let baseUrlString = "https://api.github.com/users"
+    private let baseUrlStr = "\(Config.baseUrl)/users"
     
     private init() {}
     
     func fetchUsers(perPage: Int, since: Int) async throws -> [User] {
-        let urlString = String(format: "%@?per_page=%d&since=%d", baseUrlString, perPage, since)
+        let urlString = String(format: "%@?per_page=%d&since=%d", baseUrlStr, perPage, since)
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
@@ -27,7 +26,7 @@ final class UserAPIService {
     }
     
     func fetchUserDetail(username: String) async throws -> UserDetails {
-        let urlString = String(format: "%@/%@", baseUrlString, username)
+        let urlString = String(format: "%@/%@", baseUrlStr, username)
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
