@@ -28,13 +28,16 @@ class UserStorage: UserStorageProtocol {
     }
     
     @MainActor
-    func saveUsers(_ users: [User]) async throws {
+    func saveUsers(_ users: [any UserProtocol]) async throws {
+        guard let users = users as? [User] else {
+            throw UserError(.notFound)
+        }
         users.forEach { container.mainContext.insert($0) }
         try container.mainContext.save()
     }
     
     @MainActor
-    func loadUsers(perPage: Int, since: Int) async throws -> [User] {
+    func loadUsers(perPage: Int, since: Int) async throws -> [any UserProtocol] {
         var descriptor = FetchDescriptor<User>(
             predicate: #Predicate { $0.id > since },
             sortBy: [SortDescriptor(\.timestamp)]

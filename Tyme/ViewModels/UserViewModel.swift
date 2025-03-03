@@ -9,7 +9,7 @@ import Foundation
 
 final class UserViewModel: ObservableObject {
     
-    @Published var userDetails: UserDetails?
+    @Published var userDetails: (any UserDetailsProtocol)?
     @Published var isLoading = false
     @Published var errorMessage: String?
     

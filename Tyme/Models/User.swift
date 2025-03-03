@@ -8,9 +8,16 @@
 import SwiftData
 import Foundation
 
+public protocol UserProtocol: Identifiable, Codable {
+    var id: Int { get }
+    var login: String { get }
+    var avatarUrl: String? { get }
+    var htmlUrl: String? { get }
+    var timestamp: Double { get }
+}
 
 @Model
-final class User: Identifiable, Codable {
+final class User: UserProtocol {
     
     @Attribute(.unique) var id: Int
     var login: String

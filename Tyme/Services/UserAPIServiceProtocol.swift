@@ -9,6 +9,6 @@ import Foundation
 
 
 protocol UserAPIServiceProtocol {
-    func fetchUsers(perPage: Int, since: Int) async throws -> [User]
-    func fetchUserDetail(username: String) async throws -> UserDetails
+    func fetchUsers(perPage: Int, since: Int) async throws -> [any UserProtocol]
+    func fetchUserDetail(username: String) async throws -> any UserDetailsProtocol
 }

@@ -33,7 +33,7 @@ final class UserListViewModel: ObservableObject {
                 let newUsers = try await repository.getUsers(perPage: perPage, since: since)
                 await MainActor.run {
                     isLoading = false
-                    users.append(contentsOf: newUsers)
+                    users.append(contentsOf: (newUsers as? [User]) ?? [])
                     if newUsers.isEmpty {
                         canLoadMore = false
                     } else {
@@ -49,8 +49,13 @@ final class UserListViewModel: ObservableObject {
         }
     }
     
-    func shouldLoadMoreData(currentItem: User) -> Bool {
-        guard let index = users.firstIndex(of: currentItem) else { return false }
+    func shouldLoadMoreData(currentItem: any UserProtocol) -> Bool {
+        guard
+            let currentItem = currentItem as? User,
+            let index = users.firstIndex(of: currentItem)
+        else {
+            return false
+        }
         return index >= users.count - loadThreshold && canLoadMore && !isLoading
     }
     
