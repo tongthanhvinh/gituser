@@ -81,6 +81,7 @@
 				FD4841E22D7096E60037AA76 /* Products */,
 				FD4845612D733B390037AA76 /* Configs */,
 				FD4845622D733B450037AA76 /* Configs */,
+				FD5C069B2D75525C0051A761 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,6 +107,13 @@
 			children = (
 			);
 			path = Configs;
+			sourceTree = "<group>";
+		};
+		FD5C069B2D75525C0051A761 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -471,7 +479,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinhlabs.test.TymeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -489,7 +497,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinhlabs.test.TymeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -506,6 +514,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinhlabs.test.TymeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -522,6 +531,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinhlabs.test.TymeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

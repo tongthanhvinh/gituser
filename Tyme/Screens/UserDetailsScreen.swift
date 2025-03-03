@@ -23,28 +23,26 @@ struct UserDetailsScreen: View {
                     Spacer()
                     VStack {
                         Image("people")
+                            .renderingMode(.template)
                             .padding(12)
-                            .background(.gray.opacity(0.1))
+                            .background(Color(.secondarySystemBackground))
                             .clipShape(Circle())
                         Text(followersStr(userDetails.followers))
                             .font(.caption)
-                            .foregroundColor(.black)
                         Text("Follower")
                             .font(.footnote)
-                            .foregroundColor(.black)
                     }
                     Spacer()
                     VStack {
                         Image("tag")
+                            .renderingMode(.template)
                             .padding(12)
-                            .background(.gray.opacity(0.1))
+                            .background(Color(.secondarySystemBackground))
                             .clipShape(Circle())
                         Text(followingStr(userDetails.following))
                             .font(.caption)
-                            .foregroundColor(.black)
                         Text("Following")
                             .font(.footnote)
-                            .foregroundColor(.black)
                     }
                     Spacer()
                 }
@@ -53,6 +51,7 @@ struct UserDetailsScreen: View {
                 
                 Text("Blog")
                     .font(.headline)
+                
                 if let htmlUrl = userDetails.htmlUrl, let url = URL(string: htmlUrl) {
                     Button(action: {
                         UIApplication.shared.open(url)
@@ -67,6 +66,7 @@ struct UserDetailsScreen: View {
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .font(.caption)
+                    .foregroundColor(.primary)
             }
             
             if viewModel.isLoading {
@@ -76,7 +76,9 @@ struct UserDetailsScreen: View {
             }
             
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(16)
+        .background(Color(.systemBackground))
         .navigationTitle("User Details")
         .configBackButton(dismiss: dismiss)
         .task {

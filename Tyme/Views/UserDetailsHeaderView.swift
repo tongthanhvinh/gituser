@@ -19,7 +19,7 @@ struct UserDetailsHeaderView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.1))
                 CachedAsyncImageView(urlStr: user?.avatarUrl)
-                    .foregroundStyle(.gray.opacity(0.3))
+                    .foregroundStyle(Color(.secondarySystemBackground))
                     .frame(width: imageSize, height: imageSize)
                     .background(Color(red: 234/255, green: 227/255, blue: 244/255))
                     .clipShape(Circle())
@@ -31,10 +31,13 @@ struct UserDetailsHeaderView: View {
                     .font(.headline)
                     .lineLimit(1)
                 Divider()
+                    .background(.primary)
                 HStack(spacing: 2) {
                     Image("location")
                         .resizable()
+                        .renderingMode(.template)
                         .frame(width: 16, height: 16)
+                        .foregroundStyle(.primary)
                     Text(user?.location ?? "nil")
                         .font(.caption)
                 }
@@ -42,7 +45,7 @@ struct UserDetailsHeaderView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color(.systemBackground))
         .cornerRadius(8)
         .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
         .fixedSize(horizontal: false, vertical: true)

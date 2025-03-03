@@ -9,7 +9,7 @@ import SwiftData
 import Foundation
 
 
-final class UserStorage {
+class UserStorage: UserStorageProtocol {
     
     static let shared = UserStorage()
     

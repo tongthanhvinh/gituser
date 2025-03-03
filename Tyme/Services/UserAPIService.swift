@@ -8,29 +8,31 @@
 import Foundation
 
 
-final class UserAPIService {
+class UserAPIService: UserAPIServiceProtocol {
     
-    static let shared = UserAPIService()
+    private let baseUrlStr: String
+    private let urlSession: URLSession
     
-    private let baseUrlStr = "\(Config.baseUrl)/users"
-    
-    private init() {}
+    init(baseUrlStr: String = "\(Config.baseUrl)/users", urlSession: URLSession = .shared) {
+        self.baseUrlStr = baseUrlStr
+        self.urlSession = urlSession
+    }
     
     func fetchUsers(perPage: Int, since: Int) async throws -> [User] {
         let urlString = String(format: "%@?per_page=%d&since=%d", baseUrlStr, perPage, since)
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: urlString), url.scheme != nil else {
             throw URLError(.badURL)
         }
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, _) = try await urlSession.data(from: url)
         return try JSONDecoder().decode([User].self, from: data)
     }
     
     func fetchUserDetail(username: String) async throws -> UserDetails {
         let urlString = String(format: "%@/%@", baseUrlStr, username)
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: urlString), url.scheme != nil else {
             throw URLError(.badURL)
         }
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, _) = try await urlSession.data(from: url)
         return try JSONDecoder().decode(UserDetails.self, from: data)
     }
 }

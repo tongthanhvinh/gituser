@@ -10,24 +10,12 @@ import Testing
 
 
 struct UserDetailsViewModelTests {
-    
-    func createTestUserDetails(id: Int, login: String) -> UserDetails {
-        return UserDetails(
-            id: id,
-            login: login,
-            avatarUrl: "https://avatar\(id).com",
-            htmlUrl: "https://user\(id).com",
-            location: "Test Location",
-            followers: 10,
-            following: 5
-        )
-    }
 
     // Test 1: Load user details
     @Test("Loads user details successfully")
     func testLoadUserDetails() async throws {
         let mockRepo = MockUserRepository()
-        let testDetails = createTestUserDetails(id: 1, login: "user1")
+        let testDetails = Mock.UserDetails(id: 1, login: "user1")
         mockRepo.userDetailsToReturn = testDetails
         
         let viewModel = UserViewModel(repository: mockRepo)

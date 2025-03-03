@@ -11,18 +11,13 @@ import Testing
 
 
 struct UserListViewModelTests {
-    // Helper function to create test users
-    func createTestUser(id: Int, login: String) -> User {
-        return User(id: id, login: login, avatarUrl: "https://avatar\(id).com", htmlUrl: "https://user\(id).com")
-    }
-    
     // Test 1: Initial load
     @Test("Initial load populates users")
     func testInitialLoad() async throws {
         let mockRepo = MockUserRepository()
         let testUsers = [
-            createTestUser(id: 1, login: "user1"),
-            createTestUser(id: 2, login: "user2")
+            Mock.User(id: 1, login: "user1"),
+            Mock.User(id: 2, login: "user2")
         ]
         mockRepo.usersToReturn = testUsers
         
@@ -40,8 +35,8 @@ struct UserListViewModelTests {
     @Test("Load more users appends to existing users")
     func testLoadMoreUsers() async throws {
         let mockRepo = MockUserRepository()
-        let initialUsers = [createTestUser(id: 1, login: "user1")]
-        let moreUsers = [createTestUser(id: 2, login: "user2")]
+        let initialUsers = [Mock.User(id: 1, login: "user1")]
+        let moreUsers = [Mock.User(id: 2, login: "user2")]
         mockRepo.usersToReturn = initialUsers
         
         let viewModel = UserListViewModel(repository: mockRepo)
@@ -59,7 +54,7 @@ struct UserListViewModelTests {
     @Test("Should load more data returns correct values")
     func testShouldLoadMoreData() async throws {
         let mockRepo = MockUserRepository()
-        let testUsers = (1...5).map { createTestUser(id: $0, login: "user\($0)") }
+        let testUsers = (1...5).map { Mock.User(id: $0, login: "user\($0)") }
         mockRepo.usersToReturn = testUsers
         
         let viewModel = UserListViewModel(repository: mockRepo)
@@ -67,15 +62,15 @@ struct UserListViewModelTests {
         
         #expect(viewModel.shouldLoadMoreData(currentItem: testUsers[1]) == false)
         #expect(viewModel.shouldLoadMoreData(currentItem: testUsers[3]) == true)
-        #expect(viewModel.shouldLoadMoreData(currentItem: createTestUser(id: 999, login: "notInList")) == false)
+        #expect(viewModel.shouldLoadMoreData(currentItem: Mock.User(id: 999, login: "notInList")) == false)
     }
     
     // Test 4: Refresh data
     @Test("Refresh resets and reloads data")
     func testRefreshData() async throws {
         let mockRepo = MockUserRepository()
-        let initialUsers = [createTestUser(id: 1, login: "user1")]
-        let newUsers = [createTestUser(id: 2, login: "user2")]
+        let initialUsers = [Mock.User(id: 1, login: "user1")]
+        let newUsers = [Mock.User(id: 2, login: "user2")]
         mockRepo.usersToReturn = initialUsers
         
         let viewModel = UserListViewModel(repository: mockRepo)
@@ -106,7 +101,7 @@ struct UserListViewModelTests {
     @Test("Doesn't load more when already loading")
     func testNoDuplicateLoading() async throws {
         let mockRepo = MockUserRepository()
-        let testUsers = [createTestUser(id: 1, login: "user1")]
+        let testUsers = [Mock.User(id: 1, login: "user1")]
         mockRepo.usersToReturn = testUsers
         
         let viewModel = UserListViewModel(repository: mockRepo)
@@ -114,5 +109,43 @@ struct UserListViewModelTests {
         viewModel.loadMoreUsers()
         
         #expect(viewModel.users.isEmpty)
+    }
+    
+    // Test 7: Refresh data fail
+    @Test("Refresh data fail")
+    func testRefreshDataFail() async throws {
+        let mockRepo = MockUserRepository()
+        let initialUsers = [Mock.User(id: 1, login: "user1")]
+        let newUsers = [Mock.User(id: 2, login: "user2")]
+        mockRepo.usersToReturn = initialUsers
+        
+        let viewModel = UserListViewModel(repository: mockRepo)
+        try await Task.sleep(for: .seconds(1))
+        
+        mockRepo.usersToReturn = newUsers
+        mockRepo.shouldThrowError = true
+        viewModel.refreshData()
+        try await Task.sleep(for: .seconds(1))
+        
+        #expect(viewModel.users.map { $0.id } == [1])
+        #expect(viewModel.users.count == 1)
+    }
+    
+    // Test 7: Load more data returns empty
+    @Test("Load more data returns empty")
+    func testLoadMoreEmpty() async throws {
+        let mockRepo = MockUserRepository()
+        let initialUsers = [Mock.User(id: 1, login: "user1")]
+        mockRepo.usersToReturn = initialUsers
+        
+        let viewModel = UserListViewModel(repository: mockRepo)
+        try await Task.sleep(for: .seconds(1))
+        
+        mockRepo.usersToReturn = []
+        viewModel.loadMoreUsers()
+        try await Task.sleep(for: .seconds(1))
+        #expect(viewModel.shouldLoadMoreData(currentItem: initialUsers.first!) == false)
+        #expect(viewModel.users.map { $0.id } == [1])
+        #expect(viewModel.users.count == 1)
     }
 }

@@ -16,6 +16,8 @@ extension View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: { dismiss?() }) {
                         Image("arrow_left")
+                            .renderingMode(.template)
+                            .foregroundStyle(Color(.label))
                     }
                 }
             }

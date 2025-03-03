@@ -12,7 +12,11 @@ struct UserListScreen: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject private var viewModel = UserListViewModel()
+    @StateObject private var viewModel: UserListViewModel
+    
+    init(viewModel: UserListViewModel = UserListViewModel()) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         List {
@@ -41,7 +45,6 @@ struct UserListScreen: View {
                     .listRowSeparator(.hidden)
             }
         }
-        .background(Color.white)
         .contentMargins(.zero)
         .listStyle(.plain)
         .navigationTitle("Github Users")

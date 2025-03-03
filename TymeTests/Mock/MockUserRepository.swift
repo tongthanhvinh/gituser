@@ -9,6 +9,7 @@
 
 
 class MockUserRepository: UserRepositoryProtocol {
+    
     var usersToReturn: [User] = []
     var userDetailsToReturn: UserDetails?
     var shouldThrowError = false
@@ -35,9 +36,4 @@ class MockUserRepository: UserRepositoryProtocol {
             throw TestError.mockError
         }
     }
-}
-
-private enum TestError: Error {
-    case mockError
-    case noDetails
 }

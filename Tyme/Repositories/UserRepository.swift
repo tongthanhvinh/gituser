@@ -9,10 +9,13 @@ import Foundation
 
 final class UserRepository: UserRepositoryProtocol {
     
-    private let apiService: UserAPIService
-    private let storage: UserStorage
+    private let apiService: UserAPIServiceProtocol
+    private let storage: UserStorageProtocol
     
-    init(apiService: UserAPIService = .shared, storage: UserStorage = .shared) {
+    init(
+        apiService: UserAPIServiceProtocol = UserAPIService(),
+        storage: UserStorageProtocol = UserStorage.shared
+    ) {
         self.apiService = apiService
         self.storage = storage
     }
