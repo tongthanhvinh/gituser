@@ -47,9 +47,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FD0C0F052D75A7D100DC3112 /* GitUser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GitUser.app; path = "/Users/vinhtong/Projects/GitUser/build/Debug-iphoneos/GitUser.app"; sourceTree = "<absolute>"; };
-		FD0C0F062D75A7D100DC3112 /* GitUserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GitUserTests.xctest; path = "/Users/vinhtong/Projects/GitUser/build/Debug-iphoneos/GitUser.app/PlugIns/GitUserTests.xctest"; sourceTree = "<absolute>"; };
-		FD0C0F072D75A7D100DC3112 /* GitUserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GitUserUITests.xctest; path = "/Users/vinhtong/Projects/GitUser/build/Debug-iphoneos/GitUserUITests-Runner.app/PlugIns/GitUserUITests.xctest"; sourceTree = "<absolute>"; };
+		FD12EBDA2D760FBA00A680C6 /* GitUser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitUser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD12EBDB2D760FBA00A680C6 /* GitUserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitUserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD12EBDC2D760FBA00A680C6 /* GitUserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitUserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD12EC392D76110200A680C6 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
+		FD12EC3B2D76116D00A680C6 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,12 +97,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD12EC382D76109A00A680C6 /* FakeServer */ = {
+			isa = PBXGroup;
+			children = (
+				FD12EC392D76110200A680C6 /* main.py */,
+				FD12EC3B2D76116D00A680C6 /* requirements.txt */,
+			);
+			path = FakeServer;
+			sourceTree = "<group>";
+		};
 		FD4841D82D7096E60037AA76 = {
 			isa = PBXGroup;
 			children = (
 				FD4841E32D7096E60037AA76 /* GitUser */,
 				FD4841F62D7096E70037AA76 /* GitUserTests */,
 				FD4842002D7096E70037AA76 /* GitUserUITests */,
+				FD12EBDA2D760FBA00A680C6 /* GitUser.app */,
+				FD12EBDB2D760FBA00A680C6 /* GitUserTests.xctest */,
+				FD12EBDC2D760FBA00A680C6 /* GitUserUITests.xctest */,
+				FD12EC382D76109A00A680C6 /* FakeServer */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,7 +141,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitUser;
-			productReference = FD0C0F052D75A7D100DC3112 /* GitUser.app */;
+			productReference = FD12EBDA2D760FBA00A680C6 /* GitUser.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FD4841F22D7096E70037AA76 /* GitUserTests */ = {
@@ -150,7 +165,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitUserTests;
-			productReference = FD0C0F062D75A7D100DC3112 /* GitUserTests.xctest */;
+			productReference = FD12EBDB2D760FBA00A680C6 /* GitUserTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		FD4841FC2D7096E70037AA76 /* GitUserUITests */ = {
@@ -174,7 +189,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitUserUITests;
-			productReference = FD0C0F072D75A7D100DC3112 /* GitUserUITests.xctest */;
+			productReference = FD12EBDC2D760FBA00A680C6 /* GitUserUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
