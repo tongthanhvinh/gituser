@@ -16,65 +16,13 @@ struct UserDetailsScreen: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let userDetails = viewModel.userDetails {
-                UserDetailsHeaderView(user: userDetails)
-                
-                HStack(spacing: 0) {
-                    Spacer()
-                    VStack {
-                        Image("people")
-                            .renderingMode(.template)
-                            .padding(12)
-                            .background(Color(.secondarySystemBackground))
-                            .clipShape(Circle())
-                        Text(followersStr(userDetails.followers))
-                            .font(.caption)
-                        Text("Follower")
-                            .font(.footnote)
-                    }
-                    Spacer()
-                    VStack {
-                        Image("tag")
-                            .renderingMode(.template)
-                            .padding(12)
-                            .background(Color(.secondarySystemBackground))
-                            .clipShape(Circle())
-                        Text(followingStr(userDetails.following))
-                            .font(.caption)
-                        Text("Following")
-                            .font(.footnote)
-                    }
-                    Spacer()
-                }
-                .padding(.top, 16)
-                .padding(.bottom, 16)
-                
-                Text("Blog")
-                    .font(.headline)
-                
-                if let htmlUrl = userDetails.htmlUrl, let url = URL(string: htmlUrl) {
-                    Button(action: {
-                        UIApplication.shared.open(url)
-                    }) {
-                        Text(htmlUrl)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                    }
-                    .buttonStyle(.plain)
-                }
-                Spacer()
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundColor(.primary)
-            }
-            
             if viewModel.isLoading {
-                Spacer()
-                ProgressView()
-                Spacer()
+                loadingView
+            } else if let userDetails = viewModel.userDetails {
+                userDetailsView(userDetails)
+            } else if let errorMessage = viewModel.errorMessage {
+                errorView(errorMessage)
             }
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(16)
@@ -86,24 +34,91 @@ struct UserDetailsScreen: View {
         }
     }
     
-    private func followersStr(_ count: Int?) -> String {
-        guard let count = count else {
-            return "0"
+    /// View to display user details.
+    private func userDetailsView(_ userDetails: UserDetails) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            UserDetailsHeaderView(user: userDetails)
+            
+            followerFollowingView(userDetails)
+                .padding(.top, 16)
+            
+            if let htmlUrl = userDetails.htmlUrl, let url = URL(string: htmlUrl) {
+                blogSection(url: url, urlText: htmlUrl)
+            }
+            
+            Spacer()
         }
-        if count > 100 {
-            return String(format: "100+", count)
-        }
-        return String(format: "%d", count)
     }
     
-    private func followingStr(_ count: Int?) -> String {
-        guard let count = count else {
-            return "0"
+    /// Displays followers and following count with icons.
+    private func followerFollowingView(_ userDetails: UserDetails) -> some View {
+        HStack(spacing: 32) {
+            followerFollowingItem(imageName: "people", count: userDetails.followers, label: "Followers")
+            followerFollowingItem(imageName: "tag", count: userDetails.following, label: "Following")
         }
-        if count > 10 {
-            return String(format: "10+", count)
+        .frame(maxWidth: .infinity)
+    }
+    
+    /// A single item displaying either followers or following count.
+    private func followerFollowingItem(imageName: String, count: Int?, label: String) -> some View {
+        VStack {
+            Image(imageName)
+                .renderingMode(.template)
+                .padding(12)
+                .background(Color(.secondarySystemBackground))
+                .clipShape(Circle())
+            Text(formatCount(count))
+                .font(.caption)
+            Text(label)
+                .font(.footnote)
         }
-        return String(format: "%d", count)
+    }
+    
+    /// Blog section with tappable link.
+    private func blogSection(url: URL, urlText: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Blog")
+                .font(.headline)
+            Button(action: {
+                UIApplication.shared.open(url)
+            }) {
+                Text(urlText)
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                    .underline()
+            }
+            .buttonStyle(.plain)
+        }
+    }
+    
+    /// View for displaying an error message.
+    private func errorView(_ message: String) -> some View {
+        VStack {
+            Spacer()
+            Text(message)
+                .font(.caption)
+                .foregroundColor(.red)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            Spacer()
+        }
+    }
+    
+    /// View for displaying a loading indicator.
+    private var loadingView: some View {
+        VStack {
+            Spacer()
+            ProgressView("Loading...")
+            Spacer()
+        }
+    }
+    
+    /// Formats the count for followers and following.
+    private func formatCount(_ count: Int?) -> String {
+        guard let count = count else { return "0" }
+        return count >= 100 ? "100+" : "\(count)"
     }
 }
 

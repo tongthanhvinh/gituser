@@ -11,7 +11,6 @@ import SwiftData
 struct UserListScreen: View {
     
     @Environment(\.dismiss) private var dismiss
-    
     @StateObject private var viewModel: UserListViewModel
     
     init(viewModel: UserListViewModel = UserListViewModel()) {
@@ -51,6 +50,25 @@ struct UserListScreen: View {
         .configBackButton(dismiss: dismiss)
         .refreshable {
             viewModel.refreshData()
+        }
+        
+        // Error Message Display (Toast Style)
+        if let errorMessage = viewModel.errorMessage, !errorMessage.isEmpty {
+            VStack {
+                Spacer()
+                Text(errorMessage)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.red.opacity(0.8))
+                    .cornerRadius(10)
+                    .padding(.bottom, 20)
+                    .onTapGesture {
+                        withAnimation {
+                            viewModel.errorMessage = nil
+                        }
+                    }
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
         }
     }
 }
