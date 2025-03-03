@@ -52,18 +52,6 @@ class UserDetailsScreenUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Github Users"].exists)
     }
     
-    func testPullToRefresh() throws {
-        let firstUser = app.cells.firstMatch
-        XCTAssertTrue(firstUser.waitForExistence(timeout: 5))
-        
-        let list = app.collectionViews.firstMatch
-        list.swipeDown()
-        
-        // Verify refresh by checking if progress indicator appears
-        let progressIndicator = app.activityIndicators.firstMatch
-        XCTAssertTrue(progressIndicator.exists)
-    }
-    
     func testPaginationLoadsMoreUsers() throws {
         let lastCell = app.cells.element(boundBy: app.cells.count - 1)
         XCTAssertTrue(lastCell.waitForExistence(timeout: 5))

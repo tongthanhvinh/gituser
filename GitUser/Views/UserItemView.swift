@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserItemView: View {
     
-    var user: (any UserProtocol)
+    var user: User
     
     private let imageSize: CGFloat = 80
     

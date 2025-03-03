@@ -7,12 +7,17 @@
 
 @testable import GitUser
 
-
 class MockUserAPIService: UserAPIServiceProtocol {
     
-    var usersToReturn: [User] = []
+    var usersToReturn: [User]
     var userDetailsToReturn: UserDetails?
-    var shouldThrowError = false
+    var shouldThrowError: Bool
+    
+    init(usersToReturn: [User] = [], userDetailsToReturn: UserDetails? = nil, shouldThrowError: Bool = false) {
+        self.usersToReturn = usersToReturn
+        self.userDetailsToReturn = userDetailsToReturn
+        self.shouldThrowError = shouldThrowError
+    }
     
     func fetchUsers(perPage: Int, since: Int) async throws -> [User] {
         if shouldThrowError {

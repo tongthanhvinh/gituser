@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol UserRepositoryProtocol {
-    func getUsers(perPage: Int, since: Int) async throws -> [any UserProtocol]
-    func getUserDetails(username: String) async throws -> any UserDetailsProtocol
+    func getUsers(perPage: Int, since: Int) async throws -> [User]
+    func getUserDetails(username: String) async throws -> UserDetails
     func deleteAllUsers() async throws
 }

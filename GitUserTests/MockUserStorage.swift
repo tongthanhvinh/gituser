@@ -10,8 +10,13 @@
 
 class MockUserStorage: UserStorageProtocol {
     
-    var cachedUsers: [User] = []
-    var shouldThrowError = false
+    var cachedUsers: [User]
+    var shouldThrowError: Bool
+    
+    init(cachedUsers: [User] = [], shouldThrowError: Bool = false) {
+        self.cachedUsers = cachedUsers
+        self.shouldThrowError = shouldThrowError
+    }
     
     func loadUsers(perPage: Int, since: Int) async throws -> [User] {
         if shouldThrowError {

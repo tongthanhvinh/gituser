@@ -18,7 +18,7 @@ class UserAPIService: UserAPIServiceProtocol {
         self.urlSession = urlSession
     }
     
-    func fetchUsers(perPage: Int, since: Int) async throws -> [any UserProtocol] {
+    func fetchUsers(perPage: Int, since: Int) async throws -> [User] {
         let urlString = String(format: "%@?per_page=%d&since=%d", baseUrlStr, perPage, since)
         guard let url = URL(string: urlString), url.scheme != nil else {
             throw URLError(.badURL)
@@ -27,7 +27,7 @@ class UserAPIService: UserAPIServiceProtocol {
         return try JSONDecoder().decode([User].self, from: data)
     }
     
-    func fetchUserDetail(username: String) async throws -> any UserDetailsProtocol {
+    func fetchUserDetail(username: String) async throws -> UserDetails {
         let urlString = String(format: "%@/%@", baseUrlStr, username)
         guard let url = URL(string: urlString), url.scheme != nil else {
             throw URLError(.badURL)

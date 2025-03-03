@@ -11,33 +11,32 @@ import Foundation
 
 class UserStorage: UserStorageProtocol {
     
-    static let shared = UserStorage()
-    
     @MainActor
     private let container: ModelContainer
     
-    private init() {
-        let schema = Schema([User.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            self.container = try ModelContainer(for: schema, configurations: [config])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+    init(container: ModelContainer? = nil) {
+        
+        if let container = container {
+            self.container = container
+        } else {
+            let schema = Schema([User.self])
+            let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+            do {
+                self.container = try ModelContainer(for: schema, configurations: [config])
+            } catch {
+                fatalError("Could not create ModelContainer: \(error)")
+            }
         }
     }
     
     @MainActor
-    func saveUsers(_ users: [any UserProtocol]) async throws {
-        guard let users = users as? [User] else {
-            throw UserError(.notFound)
-        }
+    func saveUsers(_ users: [User]) async throws {
         users.forEach { container.mainContext.insert($0) }
         try container.mainContext.save()
     }
     
     @MainActor
-    func loadUsers(perPage: Int, since: Int) async throws -> [any UserProtocol] {
+    func loadUsers(perPage: Int, since: Int) async throws -> [User] {
         var descriptor = FetchDescriptor<User>(
             predicate: #Predicate { $0.id > since },
             sortBy: [SortDescriptor(\.timestamp)]

@@ -1,0 +1,41 @@
+{
+  "configurations" : [
+    {
+      "id" : "D2B2AFF9-233D-403B-87D0-A6C1AC3DA63B",
+      "name" : "Configuration 1",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:GitUser.xcodeproj",
+          "identifier" : "FD4841E02D7096E60037AA76",
+          "name" : "GitUser"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:GitUser.xcodeproj",
+      "identifier" : "FD4841E02D7096E60037AA76",
+      "name" : "GitUser"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GitUser.xcodeproj",
+        "identifier" : "FD4841F22D7096E70037AA76",
+        "name" : "GitUserTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GitUser.xcodeproj",
+        "identifier" : "FD4841FC2D7096E70037AA76",
+        "name" : "GitUserUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

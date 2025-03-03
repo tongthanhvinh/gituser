@@ -8,28 +8,22 @@
 import SwiftData
 import Foundation
 
-public protocol UserProtocol: Identifiable, Codable {
-    var id: Int { get }
-    var login: String { get }
-    var avatarUrl: String? { get }
-    var htmlUrl: String? { get }
-    var timestamp: Double { get }
-}
 
 @Model
-final class User: UserProtocol {
+final class User: Identifiable, Codable {
     
     @Attribute(.unique) var id: Int
     var login: String
     var avatarUrl: String?
     var htmlUrl: String?
-    var timestamp = Date().timeIntervalSince1970
+    var timestamp: Double = Date().timeIntervalSince1970
     
-    init(id: Int, login: String, avatarUrl: String?, htmlUrl: String?) {
+    init(id: Int, login: String, avatarUrl: String?, htmlUrl: String?, date: Date? = nil) {
         self.id = id
         self.login = login
         self.avatarUrl = avatarUrl
         self.htmlUrl = htmlUrl
+        if let date = date { self.timestamp = date.timeIntervalSince1970 }
     }
     
     enum CodingKeys: String, CodingKey {

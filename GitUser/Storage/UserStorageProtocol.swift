@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol UserStorageProtocol {
-    @MainActor func saveUsers(_ users: [any UserProtocol]) async throws
-    @MainActor func loadUsers(perPage: Int, since: Int) async throws -> [any UserProtocol]
+    @MainActor func saveUsers(_ users: [User]) async throws
+    @MainActor func loadUsers(perPage: Int, since: Int) async throws -> [User]
     @MainActor func deleteAllUsers() async throws
 }

@@ -15,7 +15,7 @@ struct UserDetailsViewModelTests {
     @Test("Loads user details successfully")
     func testLoadUserDetails() async throws {
         let mockRepo = MockUserRepository()
-        let testDetails = Mock.UserDetails(id: 1, login: "user1")
+        let testDetails = Mock.userDetails(id: 1, login: "user1")
         mockRepo.userDetailsToReturn = testDetails
         
         let viewModel = UserViewModel(repository: mockRepo)

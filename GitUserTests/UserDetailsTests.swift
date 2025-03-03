@@ -9,6 +9,7 @@ import Testing
 import Foundation
 @testable import GitUser
 
+
 struct UserDetailsTests {
     
     @Test("UserDetails encodes and decodes correctly")

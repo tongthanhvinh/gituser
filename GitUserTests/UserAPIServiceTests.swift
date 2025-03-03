@@ -24,7 +24,7 @@ struct UserAPIServiceTests {
     
     @Test("Fetch users successfully returns decoded users")
     func fetchUsersSuccess() async throws {
-        let mockUsers = [Mock.User(id: 1, login: "user1")]
+        let mockUsers = [Mock.user(id: 1, login: "user1")]
         let jsonData = try JSONEncoder().encode(mockUsers)
         let url = URL(string: "https://api.example.com/users?per_page=10&since=0")!
         let response = HTTPURLResponse(
@@ -56,7 +56,7 @@ struct UserAPIServiceTests {
     
     @Test("Fetch user details successfully returns decoded details")
     func fetchUserDetailSuccess() async throws {
-        let mockDetails = UserDetails(
+        let mockDetails = Mock.userDetails(
             id: 1,
             login: "testuser",
             avatarUrl: "https://avatar.com",

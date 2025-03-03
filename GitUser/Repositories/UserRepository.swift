@@ -14,13 +14,13 @@ final class UserRepository: UserRepositoryProtocol {
     
     init(
         apiService: UserAPIServiceProtocol = UserAPIService(),
-        storage: UserStorageProtocol = UserStorage.shared
+        storage: UserStorageProtocol = UserStorage()
     ) {
         self.apiService = apiService
         self.storage = storage
     }
 
-    func getUsers(perPage: Int, since: Int) async throws -> [any UserProtocol] {
+    func getUsers(perPage: Int, since: Int) async throws -> [User] {
         let cachedUsers = try await storage.loadUsers(perPage: perPage, since: since)
         if !cachedUsers.isEmpty {
             return cachedUsers
@@ -30,7 +30,7 @@ final class UserRepository: UserRepositoryProtocol {
         return users
     }
     
-    func getUserDetails(username: String) async throws -> any UserDetailsProtocol {
+    func getUserDetails(username: String) async throws -> UserDetails {
         return try await apiService.fetchUserDetail(username: username)
     }
     

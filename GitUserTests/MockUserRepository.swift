@@ -10,9 +10,15 @@
 
 class MockUserRepository: UserRepositoryProtocol {
     
-    var usersToReturn: [User] = []
+    var usersToReturn: [User]
     var userDetailsToReturn: UserDetails?
-    var shouldThrowError = false
+    var shouldThrowError: Bool
+    
+    init(usersToReturn: [User] = [], userDetailsToReturn: UserDetails? = nil, shouldThrowError: Bool = false) {
+        self.usersToReturn = usersToReturn
+        self.userDetailsToReturn = userDetailsToReturn
+        self.shouldThrowError = shouldThrowError
+    }
     
     func getUsers(perPage: Int, since: Int) async throws -> [User] {
         if shouldThrowError {

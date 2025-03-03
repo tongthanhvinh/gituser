@@ -7,18 +7,9 @@
 
 import SwiftData
 
-public protocol UserDetailsProtocol: Identifiable, Codable {
-    var id: Int { get }
-    var login: String { get }
-    var avatarUrl: String? { get }
-    var htmlUrl: String? { get }
-    var location: String? { get }
-    var followers: Int { get }
-    var following: Int { get }
-}
 
 @Model
-final class UserDetails: UserDetailsProtocol {
+final class UserDetails: Identifiable, Codable {
     
     @Attribute(.unique) var id: Int
     var login: String

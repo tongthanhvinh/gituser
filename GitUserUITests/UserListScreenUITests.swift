@@ -8,159 +8,89 @@
 
 import XCTest
 import SwiftUI
-@testable import GitUser
+//@testable import GitUser
 
 
 final class UserListScreenUITests: XCTestCase {
-    
-    
-    // MARK: - Setup
+    var app: XCUIApplication!
+        
     override func setUpWithError() throws {
-        super.setUp()
         continueAfterFailure = false
-        // Ensure UI tests run on main thread
-        DispatchQueue.main.async {
-            UIView.setAnimationsEnabled(false)
-        }
+        app = XCUIApplication()
+        app.launch()
+        
+        // Ensure we start fresh each time
+        XCUIDevice.shared.orientation = .portrait
     }
     
     override func tearDownWithError() throws {
-        super.tearDown()
+        app = nil
     }
     
-    // MARK: - Test Cases
-    
-    func testInitialViewComponents() throws {
-        // Arrange
-        let repository = MockUserRepository()
-        let viewModel = UserListViewModel(repository: repository)
-        let sut = UIHostingController(rootView: UserListScreen(viewModel: viewModel))
+    func testUserListScreenBasicElements() throws {
+        // Given: The app is launched
+        // When: UserListScreen is displayed (assuming it's the initial screen)
+        // Then: Verify basic UI elements are present
         
-        // Act
-        sut.loadViewIfNeeded()
+        // Check navigation title
+        let navTitle = app.staticTexts["Github Users"]
+        XCTAssertTrue(navTitle.exists, "Navigation title 'Github Users' should be visible")
         
-        // Assert
-        XCTAssertEqual(sut.navigationItem.title, "Github Users")
-        XCTAssertTrue(sut.view.backgroundColor == .white)
-        // Verify initial loading state
-        XCTAssertTrue(viewModel.isLoading)
+        // Check list exists
+        let list = app.collectionViews.cells.firstMatch
+        XCTAssertTrue(list.exists, "User list should be visible")
     }
     
-    func testUserListRendering() throws {
-        // Arrange
-        let repository = MockUserRepository()
-        let mockUsers = [
-            Mock.User(id: 1, login: "testuser1"),
-            Mock.User(id: 2, login: "testuser2"),
-        ]
-        repository.usersToReturn = mockUsers
-        let viewModel = UserListViewModel(repository: repository)
-        let sut = UIHostingController(rootView: UserListScreen(viewModel: viewModel))
+    
+    func testUserListNavigationToDetails() throws {
+        // Given: The app is launched and users are loaded
+        // Wait for initial data to load
+        let firstUserCell = app.collectionViews.cells.images.firstMatch
+        XCTAssertTrue(firstUserCell.waitForExistence(timeout: 5.0),
+                     "At least one user cell should appear")
         
-        // Act
-        sut.loadViewIfNeeded()
-        let expectation = XCTestExpectation(description: "Initial users loaded")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            expectation.fulfill()
-        }
-        wait(for: [expectation], timeout: 1.0)
+        // When: User taps on a user cell
+        firstUserCell.tap()
         
-        // Assert
-        let tableView = try XCTUnwrap(sut.view.subviews.first { $0 is UITableView } as? UITableView)
-        XCTAssertEqual(tableView.numberOfRows(inSection: 0), 2)
-        
-        // Verify navigation setup (can't test destination directly without ViewInspector)
-        let cell = tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertNotNil(cell)
+        // Then: Verify navigation to UserDetailsScreen occurred
+        // Note: You'll need to add identifiable elements in UserDetailsScreen
+        let detailsScreenElement = app.staticTexts["User Details"] // Adjust based on your UserDetailsScreen
+        XCTAssertTrue(detailsScreenElement.waitForExistence(timeout: 2.0),
+                     "Should navigate to user details screen")
     }
     
-//    func testLoadingIndicator() throws {
-//        // Arrange
-//        let repository = MockUserRepository()
-//        let viewModel = UserListViewModel(repository: repository)
-//        let sut = UIHostingController(rootView: UserListScreen(viewModel: viewModel))
-//        
-//        // Act
-//        sut.loadViewIfNeeded()
-//        
-//        // Assert
-//        XCTAssertTrue(viewModel.isLoading)
-//        let tableView = try XCTUnwrap(sut.view.subviews.first { $0 is UITableView } as? UITableView)
-//        let cell = tableView.dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-//        XCTAssertTrue(cell?.subviews.contains { $0 is UIActivityIndicatorView } ?? false)
-//    }
-//    
-//    func testRefreshData() throws {
-//        // Arrange
-//        let repository = MockUserRepository()
-//        let initialUsers = [User(login: "initial", id: 1, avatarUrl: "")]
-//        repository.mockUsers = initialUsers
-//        let viewModel = UserListViewModel(repository: repository)
-//        let sut = UIHostingController(rootView: UserListScreen(viewModel: viewModel))
-//        
-//        // Wait for initial load
-//        sut.loadViewIfNeeded()
-//        let loadExpectation = XCTestExpectation(description: "Initial load")
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            loadExpectation.fulfill()
-//        }
-//        wait(for: [loadExpectation], timeout: 1.0)
-//        
-//        // Act
-//        let refreshExpectation = XCTestExpectation(description: "Refresh completed")
-//        repository.mockUsers = [User(login: "newuser", id: 2, avatarUrl: "")]
-//        
-//        // Simulate pull-to-refresh
-//        viewModel.refreshData()
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            refreshExpectation.fulfill()
-//        }
-//        
-//        // Assert
-//        wait(for: [refreshExpectation], timeout: 1.0)
-//        XCTAssertEqual(viewModel.users.count, 1)
-//        XCTAssertEqual(viewModel.users.first?.login, "newuser")
-//        XCTAssertEqual(viewModel.since, 0)
-//        XCTAssertTrue(viewModel.canLoadMore)
-//        
-//        let tableView = try XCTUnwrap(sut.view.subviews.first { $0 is UITableView } as? UITableView)
-//        XCTAssertEqual(tableView.numberOfRows(inSection: 0), 1)
-//    }
-//    
-//    func testLoadMoreUsersTrigger() throws {
-//        // Arrange
-//        let repository = MockUserRepository()
-//        let mockUsers = (1...20).map { User(login: "user\($0)", id: $0, avatarUrl: "") }
-//        repository.mockUsers = mockUsers
-//        let viewModel = UserListViewModel(repository: repository)
-//        let sut = UIHostingController(rootView: UserListScreen(viewModel: viewModel))
-//        
-//        // Wait for initial load
-//        sut.loadViewIfNeeded()
-//        let loadExpectation = XCTestExpectation(description: "Initial load")
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            loadExpectation.fulfill()
-//        }
-//        wait(for: [loadExpectation], timeout: 1.0)
-//        
-//        // Act
-//        let moreUsersExpectation = XCTestExpectation(description: "Load more triggered")
-//        repository.mockUsers = [User(login: "user21", id: 21, avatarUrl: "")]
-//        
-//        // Simulate scrolling to trigger load more
-//        let tableView = try XCTUnwrap(sut.view.subviews.first { $0 is UITableView } as? UITableView)
-//        tableView.delegate?.tableView?(tableView, willDisplay: UITableViewCell(),
-//                                       forRowAt: IndexPath(row: 17, section: 0))
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            moreUsersExpectation.fulfill()
-//        }
-//        
-//        // Assert
-//        wait(for: [moreUsersExpectation], timeout: 1.0)
-//        XCTAssertEqual(viewModel.users.count, 21)
-//        XCTAssertEqual(viewModel.since, 21)
-//        XCTAssertEqual(tableView.numberOfRows(inSection: 0), 21)
-//    }
+    func testInfiniteScrollLoading() throws {
+        // Given: The app is launched with initial users loaded
+        let table = app.collectionViews.firstMatch
+        XCTAssertTrue(table.waitForExistence(timeout: 5.0), "User list should load")
+        
+        // When: User scrolls to bottom
+        let initialCellCount = table.cells.count
+        table.swipeUp(velocity: .slow) // Scroll down
+        
+        // Then: More users should load
+        let predicate = NSPredicate(format: "count > %d", initialCellCount)
+        let expectation = expectation(for: predicate, evaluatedWith: table.cells)
+        wait(for: [expectation], timeout: 5.0)
+        
+        XCTAssertGreaterThan(table.cells.count, initialCellCount,
+                           "More users should load after scrolling")
+    }
+}
+
+
+extension XCUIElement {
+    func waitForExistence(timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == true")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: self)
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
+    }
+    
+    func waitForNonExistence(timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == false")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: self)
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+        return result == .completed
+    }
 }

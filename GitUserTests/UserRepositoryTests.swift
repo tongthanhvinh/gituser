@@ -18,8 +18,8 @@ struct UserRepositoryTests {
         let mockStorage = MockUserStorage()
         
         let cachedUsers = [
-            Mock.User(id: 1, login: "user1"),
-            Mock.User(id: 2, login: "user2")
+            Mock.user(id: 1, login: "user1"),
+            Mock.user(id: 2, login: "user2")
         ]
         mockStorage.cachedUsers = cachedUsers
         
@@ -38,8 +38,8 @@ struct UserRepositoryTests {
         let mockStorage = MockUserStorage()
         
         let apiUsers = [
-            Mock.User(id: 3, login: "user3"),
-            Mock.User(id: 4, login: "user4")
+            Mock.user(id: 3, login: "user3"),
+            Mock.user(id: 4, login: "user4")
         ]
         mockAPIService.usersToReturn = apiUsers
         
@@ -87,7 +87,7 @@ struct UserRepositoryTests {
         let mockAPIService = MockUserAPIService()
         let mockStorage = MockUserStorage()
         
-        let userDetails = Mock.UserDetails(id: 1, login: "testuser")
+        let userDetails = Mock.userDetails(id: 1, login: "testuser")
         mockAPIService.userDetailsToReturn = userDetails
         
         let repository = UserRepository(apiService: mockAPIService, storage: mockStorage)
@@ -118,7 +118,7 @@ struct UserRepositoryTests {
         let mockAPIService = MockUserAPIService()
         let mockStorage = MockUserStorage()
         
-        let cachedUsers = [Mock.User(id: 1, login: "user1")]
+        let cachedUsers = [Mock.user(id: 1, login: "user1")]
         mockStorage.cachedUsers = cachedUsers
         
         let repository = UserRepository(apiService: mockAPIService, storage: mockStorage)

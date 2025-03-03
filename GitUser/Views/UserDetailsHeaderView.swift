@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserDetailsHeaderView: View {
     
-    var user: (any UserDetailsProtocol)?
+    var user: UserDetails?
     
     private let imageSize: CGFloat = 80
     
